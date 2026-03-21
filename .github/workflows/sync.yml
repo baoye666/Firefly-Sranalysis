@@ -1,0 +1,21 @@
+name: Auto Sync Upstream
+
+on:
+  schedule:
+    # 每天 UTC 时间凌晨 2 点（北京时间上午 10 点）自动运行一次
+    - cron: '0 2 * * *'
+  # 允许你在 Actions 页面手动点击按钮触发同步
+  workflow_dispatch:
+
+jobs:
+  sync_latest_from_upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync and merge upstream repository with your current repository
+        uses: dabreadman/sync-upstream-repo@v1.3.0
+        with:
+          upstream_repo: https://github.com/AzenKain/Firefly-Sranalysis
+          upstream_branch: master
+          downstream_branch: master
+          token: ${{ secrets.SYNC_TOKEN }}
+          
